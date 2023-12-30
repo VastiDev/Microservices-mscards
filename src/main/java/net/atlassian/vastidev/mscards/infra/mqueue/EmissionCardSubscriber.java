@@ -3,6 +3,7 @@ package net.atlassian.vastidev.mscards.infra.mqueue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.atlassian.vastidev.mscards.domain.Card;
 import net.atlassian.vastidev.mscards.domain.ClientCard;
 import net.atlassian.vastidev.mscards.domain.DatasSolicitEmissionCards;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class EmissionCardSubscriber {
 
     private final CardRepository cardRepository;
@@ -36,7 +38,7 @@ public class EmissionCardSubscriber {
             clientCardRepository.save(clientCard);
 
         }catch(Exception e){
-            e.printStackTrace();
+            log.error("Erro ao receber solicitação de emissão de cartão: {}", e.getMessage());
         }
 
         }
